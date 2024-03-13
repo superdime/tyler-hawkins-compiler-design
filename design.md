@@ -139,6 +139,39 @@ Using the Visitor Pattern as implied by the AST UML, a DotGenerator visitor is u
 #### UML
 ![KXI Short Visitor UML](/img/UML/kxi-dot-generator.png)  
 
+## Semantics
+### Approach
+There are 4 steps to checking the Semantics (each as visitors).  
+1: Generate Symbol Table (SymbolTableGenerator)  
+2: Type check everything (CheckTypes)  
+3: Check valid assignment (CheckAssignment)  
+4: Check break statements (CheckBreaks)  
+
+### Rules for Semantics
+| Area/Violation                        | Visitor handling that rule |
+| ---                                   | --- |
+| duplicate members                     | SymbolTableGenerator |
+| duplicate variable names (same scope) | SymbolTableGenerator |
+| private/public access                 | CheckTypes |
+| static access                         | CheckTypes |
+| object element access                 | CheckTypes |
+| type checked expressions              | CheckTypes |
+| branching conditions are boolean      | CheckTypes |
+| switch blocks consistent              | CheckTypes |
+| variable inits consistent             | CheckTypes |
+| cout/cin typing                       | CheckTypes |
+| return typing                         | CheckTypes |
+| valid assignment                      | CheckAssignment |
+| break placement                       | CheckBreaks |  
+Note: +\<char> => \<int>
+
+### UML
+![KXI Semantics Visitors UML](/img/UML/kxi-semantics.png)  
+
+#### UML Notes
+SymbolNode, SingleSymbol and SymbolTable use the Composite Pattern  
+'type' in SymbolNode, SingleSymbol and SymbolTable is not filled until CheckTypes begins visiting  
+
 ## Required/Libraries
 - Python 3.6+
   - Pytest (for testing)
