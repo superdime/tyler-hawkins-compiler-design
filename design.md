@@ -150,8 +150,9 @@ There are 4 steps to checking the Semantics (each as visitors).
 ### Rules for Semantics
 | Area/Violation                        | Visitor handling that rule |
 | ---                                   | --- |
-| duplicate members                     | SymbolTableGenerator |
-| duplicate variable names (same scope) | SymbolTableGenerator |
+| duplicate members (same scope)        | SymbolTableGenerator |
+| class name shadowing                  | CheckTypes |
+| un-inited variables                   | CheckTypes |
 | private/public access                 | CheckTypes |
 | static access                         | CheckTypes |
 | object element access                 | CheckTypes |
