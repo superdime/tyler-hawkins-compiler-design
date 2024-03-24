@@ -147,24 +147,65 @@ There are 4 steps to checking the Semantics (each as visitors).
 3: Check valid assignment (CheckAssignment)  
 4: Check break statements (CheckBreaks)  
 
-### Rules for Semantics
-| Area/Violation                        | Visitor handling that rule |
-| ---                                   | --- |
-| duplicate members (same scope)        | SymbolTableGenerator |
-| class name shadowing                  | CheckTypes |
-| un-inited variables                   | CheckTypes |
-| private/public access                 | CheckTypes |
-| static access                         | CheckTypes |
-| object element access                 | CheckTypes |
-| type checked expressions              | CheckTypes |
-| branching conditions are boolean      | CheckTypes |
-| switch blocks consistent              | CheckTypes |
-| variable inits consistent             | CheckTypes |
-| cout/cin typing                       | CheckTypes |
-| return typing                         | CheckTypes |
-| valid assignment                      | CheckAssignment |
-| break placement                       | CheckBreaks |  
-Note: +\<char> => \<int>
+### Descriptions of visitors
+| Area/Violation                                      | Visitor handling that rule |
+| ---                                                 | --- |
+| generates scope                                     | SymbolTableGenerator |
+| duplicate members (same scope)                      | " |
+| no shadowing class names (ever)                     | CheckTypes |
+| no returning/passing functions                      | " |
+| no assigning/comparing functions                    | " |
+| new object expression points to constructor         | " |
+| private/public access                               | " |
+| static access in objects directly/this/implicitly   | " |
+| static access out of object directly only           | " |
+| object element access                               | " |
+| type checked expressions                            | " |
+| branching conditions are boolean                    | " |
+| switch blocks consistent (only int and char)        | " |
+| variable initializers consistent                    | " |
+| return types consistent                             | " |
+| valid assignment                                    | CheckAssignment |
+| valid break placement                               | CheckBreaks |  
+  
+Introduced Types:  
+- Array  
+- Functions  
+- Objects  
+
+Notes:  
+- Reference types: strings, objects, arrays (only these can be assigned null)  
+- Constructor returns are void  
+- Arithmetic operations only allow integer types  
+- Boolean operations only allow boolean types  
+- Relational operations only allow integer and character types  
+- Equality/non-arithmetic-assignment operations any types (minus function types)  
+- +\<char> => \<int>  
+- cin/cout only deal with integers and chars
+
+### Symbol Table output format 
+<pre><code>Table format:
+  &lttable full name>
+  ----------------
+  (+/-) &ltchild name>:{~}&ltchild type> { | -> &ltlink full name> }
+  ...
+  
+Example of Class A with ctor, private method x, and static public data member y
+  root.A
+  ------
+  + &ltinit>: f()->void | -> root.A.&ltinit>
+  - x: f()->int[] | -> root.A.x
+  + y: ~char
+</code></pre>
+Notes:  
+- All symbol tables are linked to the `root` table in one way (just like a standard file system)
+- `~` indicates static
+  - This can indicate a static member
+  - This can also mean the variable is a static reference to an object
+- `-` indicates private
+- `+` indicates public
+- Functions take format: `f(<param>, <param>, ...)-><return>`
+- Objects take format: `class <name>`
 
 ### UML
 ![KXI Semantics Visitors UML](/img/UML/kxi-semantics.png)  
