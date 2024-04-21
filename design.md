@@ -246,26 +246,40 @@ SymbolNode, SingleSymbol and SymbolTable use the Composite Pattern
 |  "  | InitializeVars      | Sets variables to defaults at beginning of function |
 |  "  | DefaultReturns      | Appends a return to every function |
 |  "  | ResolveBreaks       | Finds the jump_to label for breaks |
+|  "  | ResolveReturns      | Assigns a StackFrame reference to each return statement |
 |  "  | StackPointerAssign  | Assigns offsets to StackPointers while adding locals to StackFrame |
 |  "  | ForToWhile          | Reduces all for loops into While loops |
 |  "  | WhileToIf           | Reduces all while loops into If statements with jumps |
-| (4) | DecomposeSymbols    | Decomposes symbols/literals/pointers to ASM |
-|  "  | DecomposeCase       | Decomposes Case to ASM (seperated to loading item and running body) |
-|  "  | DecomposeRetBreak   | Resolves Return and Break statements. Break -> JMP and Return -> Function Return |
+|  "  | GenNOPLabels        | Adds 'label NOP' line for where each label needs to occur |
+| (4) | DecomposePointers   | Decomposes pointers to ASM |
+|  "  | ResolveOpReg        | Resolves ops and registers (change to STR, change to R1 if R0 is taken, etc) |
+|  "  | DecomposeOps        | Decomposes Binary and Unary operations |
+|  "  | DecomposeBrk        | Decomposes Break statements |
 |  "  | DecomposeIO         | Decomposes Cout and Cin statements to TRP |
 |  "  | DecomposeFuncCalls  | Decomposes FunctionCalls to ASM |
-|  "  | DecomposeRest       | Decomposes most nodes into ASMBlocks. Reduces PrePostASMBlocks to ASMBlocks |
-|  "  | Squash              | Reduces all nodes into single ASM block |
+|  "  | DecomposeVariables  | Decomposes Variable to ASM |
+|  "  | DecomposeRet        | Decomposes Return statements |
+|  "  | DecomposeIf         | Decomposes If to ASM |
+|  "  | DecomposeCase       | Decomposes Case to ASM (seperated to loading item and running body) |
+|  "  | DecomposeSwitch     | Decomposes Switch to ASM |
+|  "  | DecomposeSubRoutine | Decomposes SubRoutine to ASM |
+|  "  | Squash              | Reduces ASMBlocks to string |
+
+### Memory Map
+![Compiler Memory Map](img/diagrams/memory-map.png)  
 
 ### UML
 New intermediate AST nodes  
-![KXI Desugaring AST Nodes]()  
+![KXI Desugaring AST Nodes](img/UML/kxi-asm-ast.png)  
   
 Desugaring visitors  
-![KXI Desugaring Visitors]()  
+![KXI Desugaring Visitors](img/UML/kxi-desugar-visitors.png)  
+  
+Desugaring structures
+![KXI Desugaring Structures](img/UML/kxi-desugar-structs.png)
 
 ## Required/Libraries
-- Python 3.6+
+- Python 3.12+
   - Pytest (for testing)
   - SLY (given)
   - PyDot
