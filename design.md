@@ -228,20 +228,22 @@ SymbolNode, SingleSymbol and SymbolTable use the Composite Pattern
 | (0) | NameMangler         | Mangles scope-specific names into unique identifiers |
 |  *  | FlattenSymTable     | Not actual visitor. Name mangler flattens the root table in CompUnit |
 |  "  | ASMifyNodes         | Converts various nodes to ASM nodes |
-|  "  | SpecialFunctionGen  | Generates special functions like ALLC, MAIN, PRINT and turns new expressions into function calls |
+|  "  | SpecialFunctionGen  | Generates special functions MAIN and print |
 |  "  | RemoveBlocks        | Removes all Blocks (since everything now has a unique name) |
-| (1) | MoveMemVarInit      | Moves instance member variable initializer to constructor |
-|  "  | AddThisToParams     | Adds this to instance method parameter lists (makes instance methods static) |
-|  "  | MoveObjRefIntoCall  | Moves object references inside function call parameters |
+| (1) | ClassRecordGen      | Generates a record with instance access offsets for each class (removes member variables) |
+|  "  | DefaultCtor         | Moves ctor to front of class or generates a default ctor |
+|  "  | MoveMemVarInit      | Moves instance member variable initializer to constructor |
+|  "  | AddThisParam        | Adds this to instance method parameter lists (makes instance methods static) |
 |  "  | ExplicitThis        | Adds explicit this reference to all implicit this usage |
-|  "  | ClassRecordGen      | Generates a record with instance access offsets for each class (removes member variables) |
-|  "  | ClassPointers       | Reduces this access to class record pointers |
+|  "  | DotToFunctionParam  | Moves this to function call arguments |
+|  "  | NewObjectExpansion  | Expands new object expressions into ALLC() and ctor() calls |
 | (2) | StaticExpansion     | Converts implicit static references to explicit expressions (within same class) |
 |  "  | StaticPointers      | Converts static access expressions to StaticPointers |
-|  "  | StaticVarSpace      | Moves static MemberVariable initializers to static() |
+|  "  | StaticVarSpace      | Moves static MemberVariable initializers to static() (which is generated here) |
 |  "  | ClassDestruction    | Removes all classes. Program only contains variables and functions now |
 | (3) | PullStrings         | Pulls all strings into static space (given labels) |
 |  "  | OpDestruction       | Expands double operations (like += or >=) |
+|  "  | PullVariables       | Pulls variables to the front of methods |
 |  "  | GenerateLocals      | Generates locals by reducing complex operations to side by side operations (removes Type-like) |
 |  "  | InitializeVars      | Sets variables to defaults at beginning of function |
 |  "  | DefaultReturns      | Appends a return to every function |
