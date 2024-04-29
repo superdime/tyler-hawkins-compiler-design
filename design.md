@@ -229,6 +229,7 @@ SymbolNode, SingleSymbol and SymbolTable use the Composite Pattern
 |  *  | FlattenSymTable     | Not actual visitor. Name mangler flattens the root table in CompUnit |
 |  "  | ASMifyNodes         | Converts various nodes to ASM nodes |
 |  "  | SpecialFunctionGen  | Generates special functions MAIN and print |
+|  "  | PullVariables       | Pulls variables to the front of methods |
 |  "  | RemoveBlocks        | Removes all Blocks (since everything now has a unique name) |
 | (1) | ClassRecordGen      | Generates a record with instance access offsets for each class (removes member variables) |
 |  "  | DefaultCtor         | Moves ctor to front of class or generates a default ctor |
@@ -243,7 +244,7 @@ SymbolNode, SingleSymbol and SymbolTable use the Composite Pattern
 |  "  | ClassDestruction    | Removes all classes. Program only contains variables and functions now |
 | (3) | PullStrings         | Pulls all strings into static space (given labels) |
 |  "  | OpDestruction       | Expands double operations (like += or >=) |
-|  "  | PullVariables       | Pulls variables to the front of methods |
+
 |  "  | GenerateLocals      | Generates locals by reducing complex operations to side by side operations (removes Type-like) |
 |  "  | InitializeVars      | Sets variables to defaults at beginning of function |
 |  "  | DefaultReturns      | Appends a return to every function |
