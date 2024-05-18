@@ -32,8 +32,8 @@ box        ::= `[` `]`</pre></code>
 
 #### Corresponding Tags
 - Keywords: Same letters but capitalized
-- Punctuation: `SEMICOLON` `LCUR` `RCURL` `LSQR` `RSQR` `LPAR` `RPAR` `PERIOD` `COMMA`
-- Operators: `ASSIGN` `EQUAL` `NOTEQUAL` `GREATEQ` `LESSEQ` `GREAT` `LESS` `AND` `OR` `EXCLAIM` `PLUS` `MINUS` `TIMES` `DIVIDE` `ADDASSIGN` `SUBASSIGN` `TIMESASSIGN` `DIVIDEASSIGN` `INSERT` `EXTRACT`
+- Punctuation: `SEMICOLON` `LCURLY` `RCURLY` `LSQUARE` `RSQUARE` `LPAREN` `RPAREN` `DOT` `COMMA`
+- Operators: `EQ` `EQEQ` `NOTEQ` `GEQ` `LEQ` `GT` `LT` `AND` `OR` `NOT` `PLUS` `MINUS` `TIMES` `DIVIDE` `PLUSEQ` `MINUSEQ` `TIMESEQ` `DIVIDEEQ` `INSERT` `EXTRACT`
 - Other: `ID` `CHARLIT` `STRINGLIT` `INTLIT` `UNKNOWN` `BOX`
 
 #### SLY implementation
@@ -244,7 +244,6 @@ SymbolNode, SingleSymbol and SymbolTable use the Composite Pattern
 |  "  | ClassDestruction    | Removes all classes. Program only contains variables and functions now |
 | (3) | PullStrings         | Pulls all strings into static space (given labels) |
 |  "  | OpDestruction       | Expands double operations (like += or >=) |
-
 |  "  | GenerateLocals      | Generates locals by reducing complex operations to side by side operations (removes Type-like) |
 |  "  | InitializeVars      | Sets variables to defaults at beginning of function |
 |  "  | DefaultReturns      | Appends a return to every function |
